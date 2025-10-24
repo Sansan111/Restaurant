@@ -37,7 +37,8 @@ public class SecurityConfig {
                 .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(unauthorizedHandler))
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/api/auth/**").permitAll() // Our public endpoints
-                        .requestMatchers(HttpMethod.GET, "/api/restaurants/**").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
+                        .requestMatchers("/api/restaurants/browser").permitAll() // Browser-friendly endpoint
+                        .requestMatchers(HttpMethod.GET, "/api/restaurants").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/restaurants").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/restaurants").hasAnyAuthority("ROLE_ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/restaurants").hasAnyAuthority("ROLE_ADMIN")
