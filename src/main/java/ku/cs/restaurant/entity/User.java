@@ -1,22 +1,22 @@
 package ku.cs.restaurant.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import java.time.Instant;
 import java.util.UUID;
 
 @Data
 @Entity
-public class Restaurant {
+@Table(name = "user_info")
+public class User {
     @Id
     @GeneratedValue
     private UUID id;
 
+    @Column(unique = true)
+    private String username;
+    private String password;
     private String name;
-    private double rating;
-    private String location;
+    private String role;
     private Instant createdAt;
-    private Instant updatedAt;
 }
