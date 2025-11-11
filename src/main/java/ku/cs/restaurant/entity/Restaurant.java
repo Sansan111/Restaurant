@@ -1,5 +1,6 @@
 package ku.cs.restaurant.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -14,6 +15,7 @@ public class Restaurant {
     @GeneratedValue
     private UUID id;
 
+    @Column(unique = true)
     private String name;
     private double rating;
     private String location;

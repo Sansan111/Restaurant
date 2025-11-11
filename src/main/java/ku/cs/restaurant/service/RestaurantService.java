@@ -1,5 +1,7 @@
 package ku.cs.restaurant.service;
 
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import ku.cs.restaurant.dto.RestaurantRequest;
 import ku.cs.restaurant.entity.Restaurant;
 import ku.cs.restaurant.repository.RestaurantRepository;
@@ -30,6 +32,9 @@ public class RestaurantService {
     }
 
     public Restaurant create(RestaurantRequest request) {
+        if (repository.existsByName(request.getName())) {
+            throw new EntityExistsException("Restaurant name already exists");
+        }
         Restaurant restaurant = new Restaurant();
         restaurant.setName(request.getName());
         restaurant.setRating(request.getRating());
@@ -41,12 +46,14 @@ public class RestaurantService {
     }
 
     public Restaurant getRestaurantById(UUID id) {
-        return repository.findById(id).get();
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Restaurant not found"));
     }
 
     public Restaurant update(Restaurant requestBody) {
         UUID id = requestBody.getId();
-        Restaurant record = repository.findById(id).get();
+        Restaurant record = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Restaurant not found"));
         record.setName(requestBody.getName());
         record.setRating(requestBody.getRating());
         record.setLocation(requestBody.getLocation());
@@ -55,13 +62,15 @@ public class RestaurantService {
     }
 
     public Restaurant delete(UUID id) {
-        Restaurant record = repository.findById(id).get();
+        Restaurant record = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Restaurant not found"));
         repository.deleteById(id);
         return record;
     }
 
     public Restaurant getRestaurantByName(String name) {
-        return repository.findByName(name);
+        return repository.findByName(name)
+                .orElseThrow(() -> new EntityNotFoundException("Restaurant not found"));
     }
 
     public List<Restaurant> getRestaurantByLocation(String location) {
