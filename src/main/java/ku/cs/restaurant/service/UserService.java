@@ -37,4 +37,12 @@ public class UserService {
         dao.setCreatedAt(Instant.now());
         userRepository.save(dao);
     }
+
+    public User getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username);
+        if (user == null) {
+            throw new RuntimeException("User not found");
+        }
+        return user;
+    }
 }
