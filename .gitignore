@@ -39,3 +39,6 @@ out/
 ### Logs ###
 log/
 *.log
+
+.env
+.env.properties

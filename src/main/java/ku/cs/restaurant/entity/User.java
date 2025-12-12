@@ -18,5 +18,6 @@ public class User {
     private String password;
     private String name;
     private String role;
+    private String provider; // "local" or "google"
     private Instant createdAt;
 }

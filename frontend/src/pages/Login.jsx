@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import api from '../api/axios'
+import GoogleLoginButton from '../components/GoogleLoginButton'
 
 export default function Login() {
   const [username, setUsername] = useState('')
@@ -98,6 +99,14 @@ export default function Login() {
           Login / เข้าสู่ระบบ
         </button>
       </form>
+
+      <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+        <hr style={{ margin: '1rem 0', border: 'none', borderTop: '1px solid #ccc' }} />
+        <h2 style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>
+          Google Login / เข้าสู่ระบบด้วย Google
+        </h2>
+        <GoogleLoginButton />
+      </div>
     </div>
   )
 }

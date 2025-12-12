@@ -34,6 +34,7 @@ public class UserService {
         dao.setPassword(encoder.encode(request.getPassword()));
         dao.setName(request.getName());
         dao.setRole("ROLE_USER");
+        dao.setProvider("local");
         dao.setCreatedAt(Instant.now());
         userRepository.save(dao);
     }
@@ -42,6 +43,21 @@ public class UserService {
         User user = userRepository.findByUsername(username);
         if (user == null) {
             throw new RuntimeException("User not found");
+        }
+        return user;
+    }
+
+    public User findOrCreateGoogleUser(String email, String name) {
+        User user = userRepository.findByUsername(email);
+        if (user == null) {
+            User dao = new User();
+            dao.setUsername(email);
+            dao.setName(name);
+            dao.setPassword(encoder.encode("NO_PASSWORD"));
+            dao.setRole("ROLE_USER");
+            dao.setProvider("google");
+            dao.setCreatedAt(Instant.now());
+            user = userRepository.save(dao);
         }
         return user;
     }
